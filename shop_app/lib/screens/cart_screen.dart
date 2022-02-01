@@ -38,17 +38,21 @@ class CartScreen extends StatelessWidget {
                     ), //Text('\₹${cart.totalAmount}'),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  TextButton(
-                      child: Text('ORDER NOW'),
-                      style: TextButton.styleFrom(primary: Colors.orange),
-                      onPressed: () {
-                        //here order is not changing only dispatch the action so used as false
-                        Provider.of<Orders>(context, listen: false).addOrder(
-                          cart.items.values.toList(),
-                          cart.totalAmount,
-                        );
-                        cart.clear();
-                      }),
+                  // TextButton(
+                  //     child: Text('ORDER NOW'),
+                  //     style: TextButton.styleFrom(primary: Colors.orange),
+                  //     onPressed: cart.totalAmount <= 0
+                  //         ? null
+                  //         : () {
+                  //             //here order is not changing only dispatch the action so used as false
+                  //             Provider.of<Orders>(context, listen: false)
+                  //                 .addOrder(
+                  //               cart.items.values.toList(),
+                  //               cart.totalAmount,
+                  //             );
+                  //             cart.clear();
+                  //           }),
+                  OrderButton(cart: cart)
                 ],
               ),
             ),
@@ -69,5 +73,45 @@ class CartScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key key,
+    @required this.cart,
+  }) : super(key: key);
+
+  final Cart cart;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        child: _isLoading ? CircularProgressIndicator(color: Colors.green) : Text('ORDER NOW'),
+        style: TextButton.styleFrom(primary: Colors.orange),
+        onPressed: (widget.cart.totalAmount <= 0 || _isLoading) 
+            ? null
+            : () async {
+              setState(() {
+                _isLoading = true;
+              });
+                //here order is not changing only dispatch the action so used as false
+               await Provider.of<Orders>(context, listen: false).addOrder(
+                  widget.cart.items.values.toList(),
+                  widget.cart.totalAmount,
+                );
+                setState(() {
+                _isLoading = false;
+              });
+                widget.cart.clear();
+              });
   }
 }

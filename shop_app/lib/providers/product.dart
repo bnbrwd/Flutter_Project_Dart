@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Product with ChangeNotifier {
   final String id;
@@ -17,10 +19,31 @@ class Product with ChangeNotifier {
     this.isFavorite = false,
   });
 
-  void toggleFavoriteStatus(){
+  void _setFavValue(bool newValue) {
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
+  Future<void> toggleFavoriteStatus() async {
+    final oldState = isFavorite;
     isFavorite = !isFavorite;
-    notifyListeners(); 
+    notifyListeners();
     // let listening which its know that somthing chaanged and they should rebuild.
-    //it is equivalent to set state and stateful widget, 
+    //it is equivalent to set state and stateful widget,
+    final url =
+        'https://shopapp-flutter-c6be4-default-rtdb.firebaseio.com/products/$id.json';
+    try {
+      final response = await http.patch(
+        Uri.parse(url),
+        body: json.encode({
+          'isFavorite': isFavorite,
+        }),
+      );
+      if (response.statusCode >= 400) {
+        _setFavValue(oldState);
+      }
+    } catch (error) {
+      _setFavValue(oldState);
+    }
   }
 }
