@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/auth.dart';
 import '../providers/cart.dart';
 import '../screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authData = Provider.of<Auth>(context, listen:  false);
     print('product rebuild');
     return ClipRRect(
       //clip round rectangle
@@ -45,7 +47,7 @@ class ProductItem extends StatelessWidget {
                 // Icons.favorite,
               ),
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(authData.token, authData.userId);
               },
               color: Theme.of(context).colorScheme.secondary,
             ),

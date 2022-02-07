@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/providers/auth.dart';
+import 'package:flutter_complete_guide/screens/splash_screen.dart';
 import './screens/user_products_screen.dart';
 import './providers/orders.dart';
 import './screens/cart_screen.dart';
@@ -19,20 +20,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ChangeNotifierProvider(
+        //   create: (ctx) => Products(),
+        // ),
         ChangeNotifierProvider(
-          create: (ctx) => Products(),
+          create: (ctx) => Auth(),
+          // now Auth() can be listen in anywhere in application.
+        ),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          create: (ctx) => Products('', [], ''),
+          update: (ctx, auth, previousProducts) => Products(
+              auth.token,
+              previousProducts == null ? [] : previousProducts.items,
+              auth.userId),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
           // now Cart() can be listen in anywhere in application.
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Orders(),
-          // now Orders() can be listen in anywhere in application.
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => Auth(),
-          // now Auth() can be listen in anywhere in application.
+        // ChangeNotifierProvider(
+        //   create: (ctx) => Orders(),
+        //   // now Orders() can be listen in anywhere in application.
+        // ),
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (ctx) => Orders('', [], ''),
+          update: (ctx, auth, previousOrders) => Orders(auth.token,
+              previousOrders == null ? [] : previousOrders.orders, auth.userId),
         ),
       ],
       child: Consumer<Auth>(
@@ -44,7 +57,16 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Lato',
           ),
           // home: ProductsOverviewScreen(),
-          home: AuthScreen(),
+          home: auth.isAuth
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           debugShowCheckedModeBanner: false,
           routes: {
             ProductDetailScreen.routeName: (ctx) =>
