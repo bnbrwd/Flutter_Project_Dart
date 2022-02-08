@@ -46,7 +46,7 @@ class AuthScreen extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
+                        ..translate(-10.0),  //offset cnfiguration
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -111,9 +111,10 @@ class _AuthCardState extends State<AuthCard> {
         content: Text(message),
         actions: <Widget>[
           FlatButton(
-            child: Text('Okey'),
+            child: Text('Okay'),
             onPressed: () {
               Navigator.of(ctx).pop();
+              //used to close dialog
             },
           ),
         ],
@@ -217,12 +218,13 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
+                  obscureText: true,  //make enter value star i.e not visible
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return null;
                   },
                   onSaved: (value) {
                     _authData['password'] = value;
@@ -238,6 +240,7 @@ class _AuthCardState extends State<AuthCard> {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return null;
                           }
                         : null,
                   ),
@@ -264,7 +267,7 @@ class _AuthCardState extends State<AuthCard> {
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, //reduce amount of surface you can hit with your finger.
                   textColor: Theme.of(context).primaryColor,
                 ),
               ],

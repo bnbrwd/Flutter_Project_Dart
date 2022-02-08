@@ -160,6 +160,7 @@ class Products with ChangeNotifier {
           // isFavorite: prodData['isFavorite'],
           isFavorite: favoriteData == null ? false : favoriteData[prodId] ?? false,
           //here afte ?? is default value could be assigned.
+          //here favoriteData[prodId] is null then after ?? value will assigned.
           imageUrl: prodData['imageUrl'],
         ));
       });
@@ -170,7 +171,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  //create
+  //create i.e adding data to server.
   Future<void> addProduct(Product product) async {
     // by putting async all addProduct will wrap into future
     final url =

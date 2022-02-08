@@ -19,6 +19,7 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
     final authData = Provider.of<Auth>(context, listen:  false);
+    //here in all three cases we are extracting data. and can use here.
     print('product rebuild');
     return ClipRRect(
       //clip round rectangle

@@ -35,6 +35,7 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
+      //here this class is stateless but need to build again so w used FutureBuilder here.
       body: FutureBuilder(
         future: _refreshProducts(context),
         builder: (ctx, snapshot) =>

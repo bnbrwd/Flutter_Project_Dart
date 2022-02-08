@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
           // now Auth() can be listen in anywhere in application.
         ),
         ChangeNotifierProxyProvider<Auth, Products>(
+          // here we are getting token that are available in Auth and <Auth, Products> means data taking from first 
+          //and transferring into second. also it depends on Auth so Auth must defined above this.
+          //also when Auth update then also product rebuild. here Product depends on Auth.
           create: (ctx) => Products('', [], ''),
           update: (ctx, auth, previousProducts) => Products(
               auth.token,
