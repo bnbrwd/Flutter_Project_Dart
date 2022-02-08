@@ -46,7 +46,7 @@ class AuthScreen extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),  //offset cnfiguration
+                        ..translate(-10.0), //offset cnfiguration
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -93,7 +93,8 @@ class AuthCard extends StatefulWidget {
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
@@ -102,6 +103,19 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  AnimationController _controller;
+  Animation<Size> _heightAnimation; // we want to animate by height.
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(microseconds: 300));
+    _heightAnimation = Tween<Size>(
+            begin: Size(double.infinity, 260), end: Size(double.infinity, 320))
+        .animate(
+            CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
+  }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -192,6 +206,7 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
+        // height: _authMode == AuthMode.Signup ? 320 : 260,
         height: _authMode == AuthMode.Signup ? 320 : 260,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
@@ -218,7 +233,7 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,  //make enter value star i.e not visible
+                  obscureText: true, //make enter value star i.e not visible
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
@@ -267,7 +282,8 @@ class _AuthCardState extends State<AuthCard> {
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, //reduce amount of surface you can hit with your finger.
+                  materialTapTargetSize: MaterialTapTargetSize
+                      .shrinkWrap, //reduce amount of surface you can hit with your finger.
                   textColor: Theme.of(context).primaryColor,
                 ),
               ],
