@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/screens/cached_imge_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/great_places.dart';
 import './screens/places_list_screen.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo)
               .copyWith(secondary: Colors.amber),
         ),
-        home: PlacesListScreen(),
+        // home: PlacesListScreen(),
+        home: CachedImageScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
           AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(), //registered
