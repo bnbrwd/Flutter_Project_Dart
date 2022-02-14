@@ -12,6 +12,7 @@ class PlacesListScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(icon: const Icon(Icons.add), onPressed: () {
             Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
+            //here we can come back to previous screen so we used pushNamed not pushReplacement.
           }),
         ],
       ),

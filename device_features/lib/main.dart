@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo)
               .copyWith(secondary: Colors.amber),
         ),
-        // home: PlacesListScreen(),
-        home: CachedImageScreen(),
+        home: PlacesListScreen(),
+       // home: CachedImageScreen(),
         debugShowCheckedModeBanner: false,
         routes: {
           AddPlaceScreen.routeName: (ctx) => AddPlaceScreen(), //registered

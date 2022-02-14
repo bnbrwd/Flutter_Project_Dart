@@ -19,19 +19,31 @@ class _ImageInputState extends State<ImageInput> {
       maxWidth: 600,
     );
 
+    if (imageFile == null) return;
+
     setState(() {
       // _storedImage = imageFile as File;
-       _storedImage = File(imageFile.path);
+      _storedImage = File(imageFile.path);
+      //convert pic file to regular file.
+      print('stored image---$_storedImage');
+      //stored image---File: '/data/user/0/com.example.device_features/cache/scaled_0257796f-9086-4e4c-bc31-dd0f6df166098931265609263746329.jpg'
     });
 
     final appDir = await syspaths.getApplicationDocumentsDirectory();
+    // print(appDir);Directory: '/data/user/0/com.example.device_features/app_flutter'
     // space for app in device
-    final fileName = path.basename(imageFile.path);
-    
-    
+    final fileNameWithExtension = path.basename(imageFile.path);
+    // print(fileName);scaled_7d5c1ca0-dca3-4d47-9111-73bfcf4d7ceb7552469672176804227.jpg
+    final localImage = await File(imageFile.path)
+        .copy('${appDir.path}/$fileNameWithExtension');
+    //  final savedImage = await _storedImage.copy('$appDir/$fileNameWithExtension');
+    //image saved in final destination.
+    print('localImage---$localImage');
 
+    
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -54,12 +66,14 @@ class _ImageInputState extends State<ImageInput> {
                 ),
           alignment: Alignment.center,
         ),
-        SizedBox(width: 30),
-        TextButton.icon(
-          icon: Icon(Icons.camera),
-          label: Text('Take Picture'),
-          style: TextButton.styleFrom(primary: Colors.deepOrange),
-          onPressed: _takePicture,
+        SizedBox(width: 10),
+        Expanded(
+          child: TextButton.icon(
+            icon: Icon(Icons.camera),
+            label: Text('Take Picture'),
+            style: TextButton.styleFrom(primary: Colors.deepOrange),
+            onPressed: _takePicture,
+          ),
         ),
       ],
     );
