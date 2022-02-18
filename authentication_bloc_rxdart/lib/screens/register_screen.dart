@@ -63,7 +63,7 @@ class _State extends State<RegisterScreen> {
                     builder: (context, snapshot) {
                       return TextField(
                         keyboardType: TextInputType.emailAddress,
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Enter Email',
                           labelText: 'Email',
@@ -84,7 +84,7 @@ class _State extends State<RegisterScreen> {
                     builder: (context, snapshot) {
                       return TextField(
                         keyboardType: TextInputType.phone,
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Enter Phone number',
                           labelText: 'phone number',
@@ -201,7 +201,7 @@ class _State extends State<RegisterScreen> {
                 borderRadius: BorderRadius.circular(20),
                 color: snapshot.hasError || !snapshot.hasData
                     ? Colors.grey
-                    : Color(0xFFFFF369),
+                    : Color(0xFF6994FF),
               ),
               child: Text(
                 "Register",

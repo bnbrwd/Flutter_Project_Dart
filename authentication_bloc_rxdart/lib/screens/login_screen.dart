@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(20),
                 color: snapshot.hasError || !snapshot.hasData
                     ? Colors.grey
-                    : Color(0xFFFFE969),
+                    : Color(0xFF6976FF),
               ),
               child: Text(
                 "Login",

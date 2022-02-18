@@ -15,7 +15,7 @@ class RegisterBloc with Validators {
   Stream<String> get email => _email.stream.transform(emailValidator);
   Stream<String> get phoneNumber =>
       _phoneNumber.stream.transform(phoneValidator);
-  Stream<String> get password => _password.stream.transform(phoneValidator);
+  Stream<String> get password => _password.stream.transform(passwordValidator);
   Stream<String> get confirmPassword =>
       _confirmPassword.stream.transform(passwordValidator);
 
