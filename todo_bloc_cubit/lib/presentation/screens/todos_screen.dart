@@ -10,7 +10,7 @@ class TodosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<TodosCubit>(context).fetchTodos();
-    //we can access cubit
+    //we can access cubit from this screen here
 
     return Scaffold(
       appBar: AppBar(
