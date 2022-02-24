@@ -8,6 +8,9 @@ import 'package:weather_bloc/blocs/theme_bloc.dart';
 import 'package:weather_bloc/blocs/weather_bloc.dart';
 import 'package:weather_bloc/events/theme_event.dart';
 import 'package:weather_bloc/events/weather_event.dart';
+import 'package:weather_bloc/screens/city_search_screen.dart';
+import 'package:weather_bloc/screens/settings_screen.dart';
+import 'package:weather_bloc/screens/temperature_widget.dart';
 import 'package:weather_bloc/states/theme_state.dart';
 import 'package:weather_bloc/states/weather_state.dart';
 
@@ -29,17 +32,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wather App using Flutter Bloc'),
+        title: const Text(
+          'Wather App',
+          // textAlign: TextAlign.center,
+        ),
         actions: <Widget>[
           IconButton(
             onPressed: () {
               //Naigate to Settings Screen
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsScreen()));
             },
             icon: const Icon(Icons.settings),
           ),
           IconButton(
             onPressed: () async {
               //Navigate to city search screen.
+              final typeCity = await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CitySearchScreen()));
+              if (typeCity != null) {
+                BlocProvider.of<WeatherBloc>(context).add(
+                  WeahterEventRequested(city: typeCity.toString()),
+                );
+              }
             },
             icon: const Icon(Icons.search),
           ),
@@ -80,6 +95,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         children: <Widget>[
                           Column(
                             children: <Widget>[
+                              SizedBox(height: 20),
                               Text(
                                 weather.location,
                                 style: TextStyle(
@@ -101,6 +117,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 ),
                               ),
                               //show more here, put together inside a widget
+                              TemperatureWidget(weather: weather),
                             ],
                           ),
                         ],

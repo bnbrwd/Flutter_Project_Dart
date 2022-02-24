@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_bloc/blocs/settings_bloc.dart';
@@ -27,6 +25,10 @@ void main() {
             BlocProvider<SettingsBloc>(
               create: (context) => SettingsBloc(),
             ),
+            // BlocProvider<WeatherBloc>(
+            //   create: (context) =>
+            //       WeatherBloc(weatherRepository: weatherRepository),
+            // ),
           ],
           child: MyApp(
             weatherRepository: weatherRepository,
@@ -45,6 +47,10 @@ void main() {
   //       ),
   //       BlocProvider<SettingsBloc>(
   //         create: (context) => SettingsBloc(),
+  //       ),
+  //       BlocProvider<WeatherBloc>(
+  //         create: (context) =>
+  //             WeatherBloc(weatherRepository: weatherRepository),
   //       ),
   //     ],
   //     child: MyApp(
@@ -68,6 +74,7 @@ class MyApp extends StatelessWidget {
         create: (context) => WeatherBloc(weatherRepository: weatherRepository),
         child: WeatherScreen(),
       ),
+      // home: WeatherScreen(),
     );
   }
 }

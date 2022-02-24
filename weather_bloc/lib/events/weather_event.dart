@@ -9,7 +9,6 @@ class WeahterEventRequested extends WeatherEvent {
   const WeahterEventRequested({required this.city});
 
   @override
-  // TODO: implement props
   List<Object> get props => [city];
 }
 
@@ -18,6 +17,5 @@ class WeahterEventRefresh extends WeatherEvent {
   const WeahterEventRefresh({required this.city});
 
   @override
-  // TODO: implement props
   List<Object> get props => [city];
 }

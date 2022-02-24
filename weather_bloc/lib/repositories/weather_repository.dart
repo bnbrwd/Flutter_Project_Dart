@@ -2,12 +2,15 @@
 
 // https://www.metaweather.com/api/location/search/?query=chicago
 
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:weather_bloc/models/weather.dart';
 
 const baseUrl = 'https://www.metaweather.com';
+// ignore: prefer_function_declarations_over_variables
 final locationUrl = (city) => '$baseUrl/api/location/search/?query=$city';
 final weatherUrl = (locationId) => '$baseUrl/api/location/$locationId';
 
@@ -21,7 +24,7 @@ class WeatherRepository {
     if(response.statusCode == 200) {
       print('data in repo for city--- ${response.body}');
      final cities = jsonDecode(response.body) as List;
-     return (cities.first)['woeid'] ?? 0;
+     return (cities.first)['woeid'] ?? {};
     }else {
       throw Exception('Error getting location id of : $city');
     }
@@ -35,7 +38,7 @@ class WeatherRepository {
     }
     print('data in repo for locationId--- ${response.body}');
     final weatherJson = jsonDecode(response.body);
-    return Weather.fromJson(response);
+    return Weather.fromJson(weatherJson);
   }
 
   Future<Weather> getWeatherFromCity(String city) async {
