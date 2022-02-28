@@ -15,15 +15,16 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
 
   File _pickedImage;
-  void _selectImage(File pickedImage){
+  void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
-  void _savePlace(){
-    if(_titleController.text.isEmpty || _pickedImage == null){
+  void _savePlace() {
+    if (_titleController.text.isEmpty || _pickedImage == null) {
       return;
     }
-    Provider.of<GreatPlaces>(context, listen: false).addPlace(_titleController.text, _pickedImage);
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_titleController.text, _pickedImage);
     Navigator.of(context).pop();
     //leave this page i,e back after this page.
   }
@@ -60,7 +61,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.orange),
               foregroundColor: MaterialStateProperty.all(Colors.white),
-              elevation: MaterialStateProperty.all(0), //remove button bottom space.
+              elevation:
+                  MaterialStateProperty.all(0), //remove button bottom space.
               tapTargetSize:
                   MaterialTapTargetSize.shrinkWrap, // fit into bottom
             ),
