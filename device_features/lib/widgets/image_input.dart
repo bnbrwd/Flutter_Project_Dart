@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
+//give accsess to store data on device.
 
 class ImageInput extends StatefulWidget {
+
+  final Function onSelectImage;
+  ImageInput(this.onSelectImage);
   @override
   _ImageInputState createState() => _ImageInputState();
 }
@@ -18,9 +22,7 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
-
     if (imageFile == null) return;
-
     setState(() {
       // _storedImage = imageFile as File;
       _storedImage = File(imageFile.path);
@@ -39,8 +41,7 @@ class _ImageInputState extends State<ImageInput> {
     //  final savedImage = await _storedImage.copy('$appDir/$fileNameWithExtension');
     //image saved in final destination.
     print('localImage---$localImage');
-
-    
+    widget.onSelectImage(localImage); //image will go into addplace screen.
   }
 
   
@@ -68,6 +69,7 @@ class _ImageInputState extends State<ImageInput> {
         ),
         SizedBox(width: 10),
         Expanded(
+          //expanded occupy rest space available.
           child: TextButton.icon(
             icon: Icon(Icons.camera),
             label: Text('Take Picture'),
