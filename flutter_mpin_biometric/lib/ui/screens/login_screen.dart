@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors
 
-import 'package:authentication_bloc_rxdart/bloc/login_bloc.dart';
-import 'package:authentication_bloc_rxdart/screens/register_screen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mpin_biometric/bloc/login_bloc.dart';
+import 'package:flutter_mpin_biometric/ui/screens/fingerprint_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,13 +11,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isVisibles = true;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<LoginBloc>(context, listen: false);
     return Scaffold(
-      // appBar: AppBar(title: Text('Login Page')),
       body: Form(
         key: _formKey,
         child: Container(
@@ -29,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // ignore: avoid_unnecessary_containers
                 Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
@@ -50,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 30),
-                //used to listen if any changes into streams.
                 StreamBuilder<String>(
                     //here we will listen loginEmail to check updation using getter
                     stream: bloc.loginEmail,
@@ -58,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       return TextField(
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          prefix: SizedBox(child: Text('+91')),
+                          // prefix: SizedBox(child: Text('+91')),
                           hintText: ' Enter Email',
                           labelText: 'email',
                           errorText: snapshot.hasError
@@ -75,60 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }),
                 SizedBox(height: 30),
-                StreamBuilder<String>(
-                    //here we will listen loginPassword to check updation
-                    stream: bloc.loginPassword,
-                    builder: (context, snapshot) {
-                      return TextField(
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: isVisibles,
-                        decoration: InputDecoration(
-                          hintText: 'Enter Password',
-                          labelText: 'Password',
-                          errorText: snapshot.hasError
-                              ? snapshot.error.toString()
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: isVisibles
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
-                            onPressed: () {
-                              setState(() {
-                                isVisibles = !isVisibles;
-                              });
-                            },
-                          ),
-                        ),
-                        // onChanged: (value) => print('Password value = $value'),
-                        onChanged: bloc.changeLoginPassword,
-                        //value goes inside  changeLoginPassword setter
-                      );
-                    }),
-                SizedBox(height: 30),
-                _buildButton(),
-                SizedBox(height: 30),
-                RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: "Need an account?",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    WidgetSpan(child: SizedBox(width: 8)),
-                    TextSpan(
-                        text: "Register here",
-                        style: TextStyle(color: Colors.blueAccent),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => RegisterScreen(),
-                            ));
-                          })
-                  ]),
-                ),
+                _buildButton(context),
               ],
             ),
           ),
@@ -137,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     final bloc = Provider.of<LoginBloc>(context, listen: false);
     return StreamBuilder<Object>(
         stream: bloc.isValid,
@@ -146,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
             onTap: snapshot.hasError || !snapshot.hasData
                 ? null
                 : () {
-                    bloc.submit();
-                    print('LOGIN');
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => FingerPrintScreen()));
                   },
             child: Container(
               height: 45,
