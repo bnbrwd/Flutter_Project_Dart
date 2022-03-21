@@ -7,6 +7,9 @@ import 'package:news_app_testing/news_page.dart';
 import 'package:news_app_testing/news_service.dart';
 import 'package:provider/provider.dart';
 
+//widgets testing
+//.......
+
 class MockNewsService extends Mock implements NewsService {}
 
 void main() {
@@ -64,9 +67,10 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pump(const Duration(milliseconds: 500));
 
-      expect(find.byKey(Key('progress-indicator')), findsOneWidget);
+      expect(find.byKey(const Key('progress-indicator')), findsOneWidget);
 
       await tester.pumpAndSettle();
+      //it will wait until there are no more rebuilds happening like animation
     },
   );
 

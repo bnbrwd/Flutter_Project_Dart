@@ -8,6 +8,9 @@ import 'package:news_app_testing/news_page.dart';
 import 'package:news_app_testing/news_service.dart';
 import 'package:provider/provider.dart';
 
+//intergating testing
+//....
+
 class MockNewsService extends Mock implements NewsService {}
 
 void main() {
@@ -52,6 +55,7 @@ void main() {
       await tester.tap(find.text('Test 1 content'));
 
       await tester.pumpAndSettle();
+      //it will wait until there are no more rebuilds happening like animation
 
       expect(find.byType(NewsPage), findsNothing);
       expect(find.byType(ArticlePage), findsOneWidget);

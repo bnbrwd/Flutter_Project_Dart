@@ -4,12 +4,15 @@ import 'package:news_app_testing/article.dart';
 import 'package:news_app_testing/news_change_notifier.dart';
 import 'package:news_app_testing/news_service.dart';
 
+//unit testing
+//.....
 class MockNewsService extends Mock implements NewsService {}
 
 void main() {
-  late NewsChangeNotifier sut;
+  late NewsChangeNotifier sut; //sut means system under test
   late MockNewsService mockNewsService;
 
+  //it called before test cases.
   setUp(() {
     mockNewsService = MockNewsService();
     sut = NewsChangeNotifier(mockNewsService);
