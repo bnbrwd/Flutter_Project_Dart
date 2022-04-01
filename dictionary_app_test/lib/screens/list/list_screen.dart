@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 class ListScreen extends StatelessWidget {
   final List<WordResponse> words;
 
-  ListScreen(this.words);
+  const ListScreen(this.words);
 
   @override
   Widget build(BuildContext context) {
+    assert(words.isNotEmpty);
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       body: ListView.separated(
