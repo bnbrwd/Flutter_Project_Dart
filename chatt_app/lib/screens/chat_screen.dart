@@ -9,10 +9,10 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   FirebaseOptions get firebaseOptions => const FirebaseOptions(
-        appId: '1:475906777603:android:792af545bfaf41d3c5e436',
-        apiKey: 'AIzaSyC0M1tkBQAtjMUdmJrU6RooYQcUKBdCFyc',
-        projectId: 'flutter-chat-app-96e8c',
-        messagingSenderId: '9dCXZHx1cwgCdzq2Iicw',
+        appId: '',
+        apiKey: '',
+        projectId: '',
+        messagingSenderId: '',
       );
 
   //Firebase initialiaze app
